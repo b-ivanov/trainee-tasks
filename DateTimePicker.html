@@ -1,0 +1,629 @@
+<html>
+<head>
+	<title>Date time picker</title>
+	<style>
+		
+		.dateInput {
+			width: 10em;
+			height: 2em;
+			line-height: 2em;
+			text-align: center;
+			vertical-align: middle;
+			position: absolute;
+			top: 1em;
+			left: 30em;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-weight: bold;
+			color: #FFFFFF;
+			background-image: linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -o-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -moz-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -webkit-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -ms-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			cursor: pointer;
+		}
+		.timeInput {
+			width: 8em;
+			height: 2em;
+			line-height: 2em;
+			text-align: center;
+			vertical-align: middle;
+			position: absolute;
+			top: 1em;
+			left: 42em;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-weight: bold;
+			color: #FFFFFF;
+			background-image: linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -o-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -moz-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -webkit-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			background-image: -ms-linear-gradient(bottom, #C1C1C1, #C7C7C7);
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			cursor: pointer;
+		}
+		.mainDiv {
+			position: absolute;
+			left: 50%;
+			margin-left: -11.5em;
+			top: 5em;
+			width: 20.1em;
+			height: 15em;
+			opacity: 0;
+			-webkit-transition: all 1s;
+			-ms-transition: all 1s;
+			-moz-transition: all 1s;
+			-o-transition: all 1s;
+			transition: all 1s;
+			padding: 1.5em;
+			background-image: linear-gradient(bottom, #BFBFBF, #D4D4D4);
+			background-image: -o-linear-gradient(bottom, #BFBFBF, #D4D4D4);
+			background-image: -moz-linear-gradient(bottom, #BFBFBF, #D4D4D4);
+			background-image: -webkit-linear-gradient(bottom, #BFBFBF, #D4D4D4);
+			background-image: -ms-linear-gradient(bottom, #BFBFBF, #D4D4D4);
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+		}
+		.setDiv {
+			height: 100%;
+			width: 100%;
+		}
+		.table {
+			table-layout: fixed;
+			text-align: center;
+			width: 100%;
+			height: 82%;
+			margin: 0 0 3% 0;
+			color: #596772;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-weight: bold;
+			font-size: 20px;
+		}
+		.tableButton {
+			width: 30%;
+			height: 14%;
+			margin: 0 1% 0 2%;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5NEZFMjBCNDEzQTcxMUUzQkRENkQ2N0NCNjE5MDZFOSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5NEZFMjBCNTEzQTcxMUUzQkRENkQ2N0NCNjE5MDZFOSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjk0RkUyMEIyMTNBNzExRTNCREQ2RDY3Q0I2MTkwNkU5IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjk0RkUyMEIzMTNBNzExRTNCREQ2RDY3Q0I2MTkwNkU5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+rB8v0AAAAjlJREFUeNrsmzFrFFEUhc+becNmTWBjsiEiiqAGBNGYKgZtBBEE7YSA4C9Y4g+w0BVtbGwUtI+thRBIxIBNNCSNwSYgRggENGxIYtZ1dpmZ93xvjK2NuHOLc2AYeOX9OPfc+4ZR1lp4nZ168aARDtd+6IP9QVRSQQDqP8oY9yQd25fu7A5lm08eT47c8+fKAxmZernQd3zswpVzVZwcLiMKSaMbSjKDz5sxXq800Pqy8u7Z5JGL6kxt+n5wYuLu9YmjWI8VtjoWqWWxuiGtgGpJ4VjZYmZxA9na+4fq8O253fOXxit7UZkVKlCVJMbi26Xvuqn7KztByfcuVqVAbTsGnoWGdjDylCGQIpUzcCw0YF3iE4YMWQckb1UEIoOHB+LfdIicyctTIQ9RDrEMdEkZ4jd1hroUg+w7xFjDaohxiPnduygBOMyfUGfLkhXqhg6RFercQ4SFOoEIcojfQZghQmQsQ11cqLeTFOuNDoshQJ5F7hDLKUvW2EsgkkLd8nJRlkPylsW7LFktiw6R1bKYIYIcYvcXEkqCP8AM4dhLceylQ6h/cQj4CVdQqnMP4R5C/TVDNFIX6hmgFAtSeKCn0IO61dpK2r0q6mFRiuSRtFF1LPToQOfVm+3mzTCMnEv4b2ExNAxM3IRnET5/dGf54+rata9xNJi3LRWyQF1sU94ZWbyH0dLGp/qN07fyv3DnF5bGns6u1pe/hZcbae+BFITSDWlkGNKtn+OHzHzt6qm6O/rwS4ABAOXcN3ISPz25AAAAAElFTkSuQmCC");
+			background-size: 100% 100%;
+			border: 0;
+			padding: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			color: #FFFFFF;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-weight: bold;
+			font-size: 17px;
+			cursor: pointer;
+		}
+		.tableButton:hover {
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5RTU1NkI0QTEzQTcxMUUzQTQyNERBNTI2MUE3MzA5NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5RTU1NkI0QjEzQTcxMUUzQTQyNERBNTI2MUE3MzA5NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjlFNTU2QjQ4MTNBNzExRTNBNDI0REE1MjYxQTczMDk3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjlFNTU2QjQ5MTNBNzExRTNBNDI0REE1MjYxQTczMDk3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Qwda1QAAAkdJREFUeNrsm01PE1EYhd87MzC1U/koVhSFhQmGJrAgAWKCK8tvINGFK2Whv0FF9B8QNsSFKxOWrClsRCMfiSaSEI0u5FMwlFY6pB1m7vXeCjtXJkzfxTnJZJJZvk/Oe86daYVSiowu35t6UUl1PY5SV1ocNyEsi6BzlJREYbWi7PLPYqK8Mfnm0cAz81wYIG33Xy92ZIeG7/RcpBtplxxbYGIxKIwUfT+o0sKXI9pdX343M5a9LTJ3J5+39+We5rJN9K0Q0K4fUiAVphWDGi1BVz2HutONlF//TXuf51+KpoezxVuDvc3bxxEmVEd1Jm16v7JWcsJkpnlHw8CSqq+2NAPDwrHdCzpJkOAcZFg4REq7A/7gIaWB6JYlBEKcBw8DpCY4hItqDtEWwST4OESRAhA+GWJO6sDBxSCnDhGovYwcIvUNFuGBQ56FOpYWr1AXFoAwC3UAYRXqqL18HGIRvn3wkVQ4qbML9cpJSD8K+DjFQYbF6dteOAS1F/p37UWGcHOIWVn4ERazlQWH8FpZyBBGDqkdC+EQJv6gs9qLDEHthVB70bKg/3GIvmNlsUl1OITlOQRA+GSIkAEpqaHYNgZSTxZRREKekONFh35wVPIS6TZMpY6qFkvkRQXf6kmVZ/2dTZJh+Lf+4or9MrM3DAwLMff2w/UH08vz+5nBm961TnJbWrG+YlxT1eIhlbc3qP3X6tdXY0O52r9w84tL/RMzK+OfDtwR325NSqsB04pBls4MHRnH/ZeC/JPRgXH96OMfAQYAhCn9os+HZCMAAAAASUVORK5CYII=");
+		}
+		.tdScroller {
+			height: 20px;
+			width: 120%;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			padding-top: 20px ;
+			padding-right: 0px;
+			padding-bottom: 20px;
+			padding-left: 0px;
+			line-height: 20px;
+		}
+		.tdDivElement {
+			height: 20px;
+		}
+		.tdPlus {
+			overflow: hidden;
+			background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBQUY2MkEwQTEzQTcxMUUzOEFGMEIwNkE5RDhDRTQ0RSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBQUY2MkEwQjEzQTcxMUUzOEFGMEIwNkE5RDhDRTQ0RSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkFBRjYyQTA4MTNBNzExRTM4QUYwQjA2QTlEOENFNDRFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkFBRjYyQTA5MTNBNzExRTM4QUYwQjA2QTlEOENFNDRFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+85qpCAAAAbdJREFUeNrsmEFLAlEUhe+zGRPUkJAigha1lTDIf5H1V7JVUctqWf+l+gutgoqiXRRkIKVECMbo07m9N0Y7aZWexTkwg7h8Z8757n1GVcUrvXNbLc6Ee5GNV2OVrFD/rpSRTiZM3bXa9rh3Ur7w/xlvSLp2c7hVmd8vLeVloZCRMEjxtMYg24+l8RnJ/Utbzq7ej3qnawcm3L7eqFbmzksrRXnqGGl1VWzMwxqHQvfdF6eNLOdUHh5b3pTNYDY3tZst5OSy6atLeUrjTMhApPGl7hFZdB6IvNWCyGr51YZi2FITVd154PKwHjiGOIAb0ZjpmKyMb6h8oM6WWGkGgrwXgceG0hAUR5wh/s26gnHEM0QYEBQ/dJgQVS4eMAlJGot+ADEkqSx2FlBCWFlQDEn2kAETArSHaPKDQkmI5wf9wBp7B6wsHKh3u31CHS0hvDoBG3ufmz2eBc7Yy9teoEV9mBBWFhJDuKnjQZ2VBQZ1VhYTQo1KiPL6HSggv4shoQ7FECYEiiFcDJHEKYtTFvX3HkJDyBBqBEOUDMHbQ5gQKIawsoD8+NnUaQhQQpzsR51nAaJvAQYAwv8Pxe6tmi0AAAAASUVORK5CYII=');
+			background-size: 100% 100%;
+			background-clip: padding-box;
+			color: #FFFFFF;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-weight: bold;
+			font-size: 20px;
+			cursor: pointer;
+		}
+		.tdPlus:hover {
+			background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBRUM0RkUzRTEzQTcxMUUzQjhGMUVDMzUyRTZCOUM4NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBRUM0RkUzRjEzQTcxMUUzQjhGMUVDMzUyRTZCOUM4NSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkFFQzRGRTNDMTNBNzExRTNCOEYxRUMzNTJFNkI5Qzg1IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkFFQzRGRTNEMTNBNzExRTNCOEYxRUMzNTJFNkI5Qzg1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4wXwbgAAAbNJREFUeNrsWb1Kw2AUvV/ypRWqQuvv7GSXWsGn8O9ZrJOiozrqwygddPEJ/OmiHRQsCAUtBTXQtGmuX4KIm5P1DOeEZEgy3cO555zEqKqkyG3fbExPBru9QVJJVApC/Dk8I+FY4DVe3wZH/ePqWXrPpITkatcHa0vFvfJsXuYKVnzfcFojwHCo0v6I5e4lkvpt97B/srxvgq2r9dVK8XRhKidN96AdxhIlymmNAHknkXkngMWZvDx0+lJvdDdtadzfsb7I+WP441UqZBSIEpGn9zg7y6XA3dGa7Q202uzGYgxJ+E/cOw5EZcU6DykYKgIEOmHV0UI+QOhwhyf0byRGxGZX+gcMIzYrhiQEhA+lQuAUQk9H85DsWxYpAVKIC1tcWTgekmZftnScHpIphIQgKUTp6nixl4zgmHoUxewhaAphygKLva1OzFngxF63sTwqBKSofzV1riwgD8l6iMdhIJk6VxaYqXNloSmEhOAoJP10wpWFIpDvP4Y0dSgP4cqC8hAWQyQwZTFlEb/3EK4sMA+hQnA8RJmyEHsICQHyEK4sID6oEDyFODxfXnAWIPgUYADA87+LI7DutAAAAABJRU5ErkJggg==');
+		}
+		.tdMinus {
+			overflow: hidden;
+			background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBM0YzQjQyQjEzQTcxMUUzOTgyQ0ZBODM1ODlFOTBBOCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBM0YzQjQyQzEzQTcxMUUzOTgyQ0ZBODM1ODlFOTBBOCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkEzRjNCNDI5MTNBNzExRTM5ODJDRkE4MzU4OUU5MEE4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkEzRjNCNDJBMTNBNzExRTM5ODJDRkE4MzU4OUU5MEE4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4XV3HAAAAZJJREFUeNrsmjFOxDAQRcesSVbQcAZKCuj3ENSIAloKOs5ADSdAokHalitQUaxAdDRQItCWqyze2GNsK7kC/sUfKZLTztPM/9+JmV69xrbZElb96n6D2MYauTk7YDcAav78IzYfHj4CuwFQi2/NQKLEGNkNhEocbOIhUQkEg0ccJ4TNAEEiNuEQJRGgCcksuLJQBoSiDifqBQaBALksagjQxho0RKkhGKUFCFcWlO3NMLiygGxvySGBQIByCFcWnO1lDkHhMdz2BrosnAlxzvPqBC0Y8vodhMeYQz6XG3YDRtRLQlQ2A8n20mUhaQiBgE1IuV0kELAJoYaA2Cx+MYTiIeMXQ64sjNLICYGbkKIhnBCkCRFevwMVXRaU66XLwswhdFlIQIbIzoLgUXKIE9VWjGFHqgf1UDTkXX1/aOw2O1IbiO/Ln4t3ul7dTnb32JGaEWSzFnXd10SOTl6id7NkufaNbdmZKjA6Catln46nJgu6OX+cppfr9FwY2+xQT/5rR2UaIWmHf0uny3h//PQnwABHDRMiG2UQ0gAAAABJRU5ErkJggg==');
+			background-size: 100% 100%;
+			background-clip: padding-box;
+			color: #FFFFFF;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-weight: bold;
+			font-size: 20px;
+			cursor: pointer;
+		}
+		.tdMinus:hover {
+			background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAoCAYAAAAIeF9DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBN0EwMzI2RTEzQTcxMUUzQTc2OUI5MDAzNjVDNThDRCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBN0EwMzI2RjEzQTcxMUUzQTc2OUI5MDAzNjVDNThDRCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE3QTAzMjZDMTNBNzExRTNBNzY5QjkwMDM2NUM1OENEIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE3QTAzMjZEMTNBNzExRTNBNzY5QjkwMDM2NUM1OENEIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+DhgEGAAAAaVJREFUeNrsWjtOw0AUfOtPjACFlhal5xKUCK5AQ0FBxR3gClBFoqfiCqkRCCQEHSChRBCShsRrsL28XSNauniKGWmVuH3jeTNj22RHN66TRkK0D/tVSZKlRk621zkNAFxcTyXxf86uppwGAB6ePj0hTpwxnAYAjPKQKB9iHIcBQYieoBCJqBAURhJdWPpLQmAI8QIhHziMhJVFPnCgCmHKwlpZXiEkBCdluRB5+egEhZIoxF4CKWXpymIPAWnqYWWxhwCmLA4Ca2UxZQEpJDxdJCEYAjGNh5AQsGLIhydAK6soSnkef3MSME09FHU2dQS45o0hUxZUMWRTZ+wl/i2GVAiOqTfvQ2jqGB7CYoiVsv4UwpUFlrKoEKSUJVxZQLb+m7Jo6jgri1+d4PUQriwwD6FCUATS9JDCicvoI+2jrqvgIY+VzTfTlVVOpGWU85lE6un9+WjY+AhPa8dOPsSO34deIaez15cd9ZGt7kZPTBzzVl0w8reRTO7v/GvbfRM+lNu7XNKLYz0Hne7asokTTmkRcLVU1kpp81u9OnTnu4MfAQYAT3yDvgAz39oAAAAASUVORK5CYII=');
+		}
+		.maskDiv {
+			width: 95px;
+			height: 26%;
+			margin: 0 0 0 -1px;
+			position: absolute;
+			top: 36%;
+			border: 1px solid #437FB3;
+			background-image: -webkit-linear-gradient(bottom, #808080, transparent, #808080);
+			background-image: -o-linear-gradient(bottom, #808080, transparent, #808080);
+			background-image: -moz-linear-gradient(bottom, #808080, transparent, #808080);
+			background-image: -webkit-linear-gradient(bottom, #808080, transparent, #808080);
+			background-image: -ms-linear-gradient(bottom, #808080, transparent, #808080);
+		}
+	</style>
+	<script>
+		var addOn = "";
+		if (typeof instData === "undefined") {
+			instData = {
+				"dateObject": {
+					"table": {
+						"innerText": [
+							["Day", "+", "<div class='maskDiv'></div><div id = 'containerDay' class = 'tdScroller'><div class='tdDivElement'>01</div><div class='tdDivElement'>02</div><div class='tdDivElement'>03</div><div class='tdDivElement'>04</div><div class='tdDivElement'>05</div><div class='tdDivElement'>06</div><div class='tdDivElement'>07</div><div class='tdDivElement'>08</div><div class='tdDivElement'>09</div><div class='tdDivElement'>10</div><div class='tdDivElement'>11</div><div class='tdDivElement'>12</div><div class='tdDivElement'>13</div><div class='tdDivElement'>14</div><div class='tdDivElement'>15</div><div class='tdDivElement'>16</div><div class='tdDivElement'>17</div><div class='tdDivElement'>18</div><div class='tdDivElement'>19</div><div class='tdDivElement'>20</div><div class='tdDivElement'>21</div><div class='tdDivElement'>22</div><div class='tdDivElement'>23</div><div class='tdDivElement'>24</div><div class='tdDivElement'>25</div><div class='tdDivElement'>26</div><div class='tdDivElement'>27</div><div class='tdDivElement'>28</div><div class='tdDivElement'>29</div><div class='tdDivElement'>30</div><div class='tdDivElement'>31</div></div>", "-"],
+							//["Month", "+", "<div class='maskDiv'></div><div id = 'containerMonth' class = 'tdScroller'><div class='tdDivElement'>01</div><div class='tdDivElement'>02</div><div class='tdDivElement'>03</div><div class='tdDivElement'>04</div><div class='tdDivElement'>05</div><div class='tdDivElement'>06</div><div class='tdDivElement'>07</div><div class='tdDivElement'>08</div><div class='tdDivElement'>09</div><div class='tdDivElement'>10</div><div class='tdDivElement'>11</div><div class='tdDivElement'>12</div></div>", "-"],
+							["Month", "+", "<div class='maskDiv'></div><div id = 'containerMonth' class = 'tdScroller'><div class='tdDivElement'>Jan</div><div class='tdDivElement'>Feb</div><div class='tdDivElement'>Mar</div><div class='tdDivElement'>Apr</div><div class='tdDivElement'>May</div><div class='tdDivElement'>June</div><div class='tdDivElement'>July</div><div class='tdDivElement'>Aug</div><div class='tdDivElement'>Sept</div><div class='tdDivElement'>Oct</div><div class='tdDivElement'>Nov</div><div class='tdDivElement'>Dec</div></div>", "-"],
+							["Year", "+", "<div class='maskDiv'></div><div id = 'containerYear' class = 'tdScroller'><div class='tdDivElement'>1913</div><div class='tdDivElement'>1914</div><div class='tdDivElement'>1915</div><div class='tdDivElement'>1916</div><div class='tdDivElement'>1917</div><div class='tdDivElement'>1918</div><div class='tdDivElement'>1919</div><div class='tdDivElement'>1920</div><div class='tdDivElement'>1921</div><div class='tdDivElement'>1922</div><div class='tdDivElement'>1923</div><div class='tdDivElement'>1924</div><div class='tdDivElement'>1925</div><div class='tdDivElement'>1926</div><div class='tdDivElement'>1927</div><div class='tdDivElement'>1928</div><div class='tdDivElement'>1929</div><div class='tdDivElement'>1930</div><div class='tdDivElement'>1931</div><div class='tdDivElement'>1932</div><div class='tdDivElement'>1933</div><div class='tdDivElement'>1934</div><div class='tdDivElement'>1935</div><div class='tdDivElement'>1936</div><div class='tdDivElement'>1937</div><div class='tdDivElement'>1938</div><div class='tdDivElement'>1939</div><div class='tdDivElement'>1940</div><div class='tdDivElement'>1941</div><div class='tdDivElement'>1942</div><div class='tdDivElement'>1943</div><div class='tdDivElement'>1944</div><div class='tdDivElement'>1945</div><div class='tdDivElement'>1946</div><div class='tdDivElement'>1947</div><div class='tdDivElement'>1948</div><div class='tdDivElement'>1949</div><div class='tdDivElement'>1950</div><div class='tdDivElement'>1951</div><div class='tdDivElement'>1952</div><div class='tdDivElement'>1953</div><div class='tdDivElement'>1954</div><div class='tdDivElement'>1955</div><div class='tdDivElement'>1956</div><div class='tdDivElement'>1957</div><div class='tdDivElement'>1958</div><div class='tdDivElement'>1959</div><div class='tdDivElement'>1960</div><div class='tdDivElement'>1961</div><div class='tdDivElement'>1962</div><div class='tdDivElement'>1963</div><div class='tdDivElement'>1964</div><div class='tdDivElement'>1965</div><div class='tdDivElement'>1966</div><div class='tdDivElement'>1967</div><div class='tdDivElement'>1968</div><div class='tdDivElement'>1969</div><div class='tdDivElement'>1970</div><div class='tdDivElement'>1971</div><div class='tdDivElement'>1972</div><div class='tdDivElement'>1973</div><div class='tdDivElement'>1974</div><div class='tdDivElement'>1975</div><div class='tdDivElement'>1976</div><div class='tdDivElement'>1977</div><div class='tdDivElement'>1978</div><div class='tdDivElement'>1979</div><div class='tdDivElement'>1980</div><div class='tdDivElement'>1981</div><div class='tdDivElement'>1982</div><div class='tdDivElement'>1983</div><div class='tdDivElement'>1984</div><div class='tdDivElement'>1985</div><div class='tdDivElement'>1986</div><div class='tdDivElement'>1987</div><div class='tdDivElement'>1988</div><div class='tdDivElement'>1989</div><div class='tdDivElement'>1990</div><div class='tdDivElement'>1991</div><div class='tdDivElement'>1992</div><div class='tdDivElement'>1993</div><div class='tdDivElement'>1994</div><div class='tdDivElement'>1995</div><div class='tdDivElement'>1996</div><div class='tdDivElement'>1997</div><div class='tdDivElement'>1998</div><div class='tdDivElement'>1999</div><div class='tdDivElement'>2000</div><div class='tdDivElement'>2001</div><div class='tdDivElement'>2002</div><div class='tdDivElement'>2003</div><div class='tdDivElement'>2004</div><div class='tdDivElement'>2005</div><div class='tdDivElement'>2006</div><div class='tdDivElement'>2007</div><div class='tdDivElement'>2008</div><div class='tdDivElement'>2009</div><div class='tdDivElement'>2010</div><div class='tdDivElement'>2011</div><div class='tdDivElement'>2012</div><div class='tdDivElement'>2013</div><div class='tdDivElement'>2014</div><div class='tdDivElement'>2015</div><div class='tdDivElement'>2016</div><div class='tdDivElement'>2017</div><div class='tdDivElement'>2018</div><div class='tdDivElement'>2019</div><div class='tdDivElement'>2020</div><div class='tdDivElement'>2021</div><div class='tdDivElement'>2022</div><div class='tdDivElement'>2023</div><div class='tdDivElement'>2024</div><div class='tdDivElement'>2025</div><div class='tdDivElement'>2026</div><div class='tdDivElement'>2027</div><div class='tdDivElement'>2028</div><div class='tdDivElement'>2029</div><div class='tdDivElement'>2030</div><div class='tdDivElement'>2031</div><div class='tdDivElement'>2032</div><div class='tdDivElement'>2033</div><div class='tdDivElement'>2034</div><div class='tdDivElement'>2035</div><div class='tdDivElement'>2036</div><div class='tdDivElement'>2037</div><div class='tdDivElement'>2038</div><div class='tdDivElement'>2039</div><div class='tdDivElement'>2040</div><div class='tdDivElement'>2041</div><div class='tdDivElement'>2042</div><div class='tdDivElement'>2043</div><div class='tdDivElement'>2044</div><div class='tdDivElement'>2045</div><div class='tdDivElement'>2046</div><div class='tdDivElement'>2047</div><div class='tdDivElement'>2048</div><div class='tdDivElement'>2049</div><div class='tdDivElement'>2050</div></div>", "-"]
+						],
+						"events": ["none", "onclick",  getWheelEvent(), "onclick"],
+						"handlers": ["", "moveUpDown(this, instData.dateObject, instData.outputDate)", "mouseWheelEvent(event, this, instData.outputDate)", "moveUpDown(this, instData.dateObject, instData.outputDate)"]
+					},
+					"button": "Today",
+					"tableHead": "Set date",
+					"setBtnId": "date",
+					"dateInput": null,
+					"dateDiv": null,
+					"containerDay": null,
+					"containerMonth": null,
+					"containerYear": null
+				},
+				"timeObject": {
+					"timeFormat": 24,
+					"table": {
+						"innerText": [
+							//["Hour", "+", "<div class='maskDiv'></div><div id = 'containerHour' class = 'tdScroller'><div class='tdDivElement'>00</div><div class='tdDivElement'>01</div><div class='tdDivElement'>02</div><div class='tdDivElement'>03</div><div class='tdDivElement'>04</div><div class='tdDivElement'>05</div><div class='tdDivElement'>06</div><div class='tdDivElement'>07</div><div class='tdDivElement'>08</div><div class='tdDivElement'>09</div><div class='tdDivElement'>10</div><div class='tdDivElement'>11</div><div class='tdDivElement'>12</div></div>", "-"],
+							["Hour", "+", "<div class='maskDiv'></div><div id = 'containerHour' class = 'tdScroller'><div class='tdDivElement'>00</div><div class='tdDivElement'>01</div><div class='tdDivElement'>02</div><div class='tdDivElement'>03</div><div class='tdDivElement'>04</div><div class='tdDivElement'>05</div><div class='tdDivElement'>06</div><div class='tdDivElement'>07</div><div class='tdDivElement'>08</div><div class='tdDivElement'>09</div><div class='tdDivElement'>10</div><div class='tdDivElement'>11</div><div class='tdDivElement'>12</div><div class='tdDivElement'>13</div><div class='tdDivElement'>14</div><div class='tdDivElement'>15</div><div class='tdDivElement'>16</div><div class='tdDivElement'>17</div><div class='tdDivElement'>18</div><div class='tdDivElement'>19</div><div class='tdDivElement'>20</div><div class='tdDivElement'>21</div><div class='tdDivElement'>22</div><div class='tdDivElement'>23</div></div>", "-"],
+							["Minutes", "+", "<div class='maskDiv'></div><div id = 'containerMinutes' class = 'tdScroller'><div class='tdDivElement'>00</div><div class='tdDivElement'>01</div><div class='tdDivElement'>02</div><div class='tdDivElement'>03</div><div class='tdDivElement'>04</div><div class='tdDivElement'>05</div><div class='tdDivElement'>06</div><div class='tdDivElement'>07</div><div class='tdDivElement'>08</div><div class='tdDivElement'>09</div><div class='tdDivElement'>10</div><div class='tdDivElement'>11</div><div class='tdDivElement'>12</div><div class='tdDivElement'>13</div><div class='tdDivElement'>14</div><div class='tdDivElement'>15</div><div class='tdDivElement'>16</div><div class='tdDivElement'>17</div><div class='tdDivElement'>18</div><div class='tdDivElement'>19</div><div class='tdDivElement'>20</div><div class='tdDivElement'>21</div><div class='tdDivElement'>22</div><div class='tdDivElement'>23</div><div class='tdDivElement'>24</div><div class='tdDivElement'>25</div><div class='tdDivElement'>26</div><div class='tdDivElement'>27</div><div class='tdDivElement'>28</div><div class='tdDivElement'>29</div><div class='tdDivElement'>30</div><div class='tdDivElement'>31</div><div class='tdDivElement'>32</div><div class='tdDivElement'>33</div><div class='tdDivElement'>34</div><div class='tdDivElement'>35</div><div class='tdDivElement'>36</div><div class='tdDivElement'>37</div><div class='tdDivElement'>38</div><div class='tdDivElement'>39</div><div class='tdDivElement'>40</div><div class='tdDivElement'>41</div><div class='tdDivElement'>42</div><div class='tdDivElement'>43</div><div class='tdDivElement'>44</div><div class='tdDivElement'>45</div><div class='tdDivElement'>46</div><div class='tdDivElement'>47</div><div class='tdDivElement'>48</div><div class='tdDivElement'>49</div><div class='tdDivElement'>50</div><div class='tdDivElement'>51</div><div class='tdDivElement'>52</div><div class='tdDivElement'>53</div><div class='tdDivElement'>54</div><div class='tdDivElement'>55</div><div class='tdDivElement'>56</div><div class='tdDivElement'>57</div><div class='tdDivElement'>58</div><div class='tdDivElement'>59</div></div>", "-"],
+							//["AM/PM", "+", "<div class='maskDiv'></div><div id = 'containerAmPm' class = 'tdScroller'><div class='tdDivElement'>AM</div><div class='tdDivElement'>PM</div></div>", "-"]
+						],
+						"events": ["none", "onclick",  getWheelEvent(), "onclick"],
+						"handlers": ["", "moveUpDown(this, instData.timeObject, instData.outputTime)", "mouseWheelEvent(event, this, instData.outputTime)", "moveUpDown(this, instData.timeObject, instData.outputTime)"]
+					},
+					"button": "Now",
+					"tableHead": "Set time",
+					"setBtnId": "time",
+					"timeInput": null,
+					"timeDiv": null,
+					"containerHour": null,
+					"containerMinutes": null,
+					"containerAmPm": null
+				},
+				"outputDate": {
+					"Day": null,
+					"Month": null,
+					"Year": null
+				},
+				"outputTime": {
+					"Hour": null,
+					"Minutes": null,
+					"AmPm": null
+				}
+			};
+		}
+		
+		function getWheelEvent() {
+			if(navigator.userAgent.match(/Firefox/)) {
+				return "onwheel";
+			} else if(navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/)) {
+				return "ontouchmove";
+			} else {
+				return "onmousewheel";
+			}
+		}
+		
+		function isValidDate(month, year, scrollFlag) {
+			var date = {};
+			year = parseInt(year, 10);
+			if(typeof month === "string" && month.match(/[0-9]/)) {
+				month = parseInt(month, 10) - 1;
+			} else {
+				var monthLength = instData.dateObject.containerMonth.children.length;
+				for(var f = 0; f < monthLength; f++) {
+					if(instData.dateObject.containerMonth.children[f].innerHTML === month) {
+						month = f;
+						break;
+					}
+				}
+			}
+			for (var day = 0; day < 31; day++) {
+				date = new Date(year, month, day + 1);
+				if(date.getFullYear() === year && date.getMonth() === month && date.getDate() === day + 1) {
+					instData.dateObject.containerDay.children[day].style.display = "block";
+					if(scrollFlag) {
+						instData.dateObject.containerDay.scrollTop = 0;
+						instData.outputDate.Day = "01";
+					}
+				} else {
+					instData.dateObject.containerDay.children[day].style.display = "none";
+				}
+			}
+			
+			delete date;
+		}
+		
+		function addZero(integer) {
+			integer = parseInt(integer, 10);
+			if(integer < 10) {
+				integer = "0" + integer;
+			}
+			return integer;
+		}
+		
+		function createInpputField(elementID) {
+			var container = "";
+			if (typeof elementID === "undefined") {
+				container = document.getElementsByTagName("body")[0];
+			} else {
+				container = document.getElementById(elementID);
+			}
+			var mainDateDiv = document.createElement("div");
+			mainDateDiv.setAttribute("class", "mainDiv");
+			var setDateDiv = document.createElement("div");
+			setDateDiv.setAttribute("class", "setDiv");
+			makeTable(setDateDiv, instData.dateObject)
+			mainDateDiv.appendChild(setDateDiv);
+			var dateInput = document.createElement("div");
+			dateInput.setAttribute("class", "dateInput");
+			dateInput.innerHTML = "Date";
+			dateInput.setAttribute("onclick","showOptions(this)");
+			if(typeof instData.timeObject !== "undefined") {
+				var mainTimeDiv = document.createElement("div");
+				mainTimeDiv.setAttribute("class", "mainDiv");
+				var setTimeDiv = document.createElement("div");
+				setTimeDiv.setAttribute("class", "setDiv");
+				makeTable(setTimeDiv, instData.timeObject)
+				mainTimeDiv.appendChild(setTimeDiv);
+				var timeInput = document.createElement("div");
+				timeInput.setAttribute("class", "timeInput");
+				timeInput.innerHTML = "Time";
+				timeInput.setAttribute("onclick","showOptions(this)");
+			}
+			container.appendChild(dateInput);
+			container.appendChild(mainDateDiv);
+			instData.dateObject.dateInput = dateInput;
+			instData.dateObject.dateDiv = mainDateDiv;
+			instData.dateObject.containerDay = document.getElementById("containerDay");
+			instData.dateObject.containerMonth = document.getElementById("containerMonth");
+			instData.dateObject.containerYear = document.getElementById("containerYear");
+			if(typeof instData.timeObject !== "undefined") {
+				container.appendChild(timeInput);
+				container.appendChild(mainTimeDiv);
+				instData.timeObject.timeInput = timeInput;
+				instData.timeObject.timeDiv = mainTimeDiv;
+				instData.timeObject.containerHour = document.getElementById("containerHour");
+				instData.timeObject.containerMinutes = document.getElementById("containerMinutes");
+				instData.timeObject.containerAmPm = document.getElementById("containerAmPm");
+				if (navigator.userAgent.match(/MSIE|Firefox|Opera/)) {
+					instData.dateObject.containerDay.innerHTML += "<div style='opacity: 0'>a</div>";
+					instData.dateObject.containerMonth.innerHTML += "<div style='opacity: 0'>a</div>";
+					instData.dateObject.containerYear.innerHTML += "<div style='opacity: 0'>a</div>";
+					instData.timeObject.containerHour.innerHTML +=  "<div style='opacity: 0'>a</div>";
+					instData.timeObject.containerMinutes.innerHTML +=  "<div style='opacity: 0'>a</div>";
+					if(instData.timeObject.timeFormat === 12) {
+						instData.timeObject.containerAmPm.innerHTML +=  "<div style='opacity: 0'>a</div>";
+					}
+				}
+			}
+		}
+		
+		function makeTable(parent, tdObject) {
+			var columns = tdObject.table.innerText.length;
+			var rows = tdObject.table.innerText[0].length + 1;
+			var table = document.createElement("table");
+			table.setAttribute("class", "table");
+			var tbody = document.createElement("tbody");
+			var tr = "";
+			var td = "";
+			var style = "width: 115%;";
+			for (var r = 0; r < rows - 1; r++) {
+				tr = document.createElement("tr");
+				for (var c = 0; c < columns; c++) {
+					td = document.createElement("td");
+					td.innerHTML = tdObject.table.innerText[c][r];
+					if(r === 2) {
+						td.setAttribute("style", "overflow: hidden; border-left: 5px solid transparent; border-right: 4px solid transparent; background-color: #FFFFFF; -moz-background-clip: padding; -webkit-background-clip: padding; background-clip: padding-box;");
+					} else {
+						td.setAttribute("style", "overflow: hidden; border-left: 5px solid transparent; border-right: 4px solid transparent;");
+					}
+					if(tdObject.table.events[r] !== "none") {
+						td.setAttribute(tdObject.table.events[r], tdObject.table.handlers[r]);
+					}
+					if(tdObject.table.innerText[c][r] === "+") {
+						td.setAttribute("id", tdObject.table.innerText[c][0] + "_+");
+						td.setAttribute("class", "tdPlus");
+					}
+					if(tdObject.table.innerText[c][r] === "-") {
+						td.setAttribute("id", tdObject.table.innerText[c][0] + "_-");
+						td.setAttribute("class", "tdMinus");
+					}
+					if(tdObject.table.innerText[c][0] == "AM/PM") {
+						td.setAttribute("id", "AmPm_" + tdObject.table.innerText[c][r]);
+					}
+					tr.appendChild(td);
+				}
+				tbody.appendChild(tr);
+			}
+			table.appendChild(tbody);
+			var set = document.createElement("input");
+			set.setAttribute("type", "button");
+			set.setAttribute("value", "Set");
+			set.setAttribute("id", tdObject.setBtnId);
+			set.setAttribute("class", "tableButton");
+			set.setAttribute("onclick", "setFunction(this)");
+			var centerBut = document.createElement("input");
+			centerBut.setAttribute("type", "button");
+			centerBut.setAttribute("value", tdObject.button);
+			centerBut.setAttribute("class", "tableButton");
+			centerBut.setAttribute("onclick", "centerButClick(this)");
+			var cancel = document.createElement("input");
+			cancel.setAttribute("type", "button");
+			cancel.setAttribute("value", "Cancel");
+			cancel.setAttribute("class", "tableButton");
+			cancel.setAttribute("onclick", "hideOptions(this)");
+			parent.appendChild(table);
+			parent.appendChild(set);
+			parent.appendChild(centerBut);
+			parent.appendChild(cancel);
+			if(columns < 3) {
+				for(var t = 0; t < columns; t++) {
+					table.getElementsByClassName("tdScroller")[t].setAttribute("style", style);
+				}
+			}
+			if(navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/)) {
+				for(var t = 0; t < columns; t++) {
+					style = "width: 100%;";
+					table.getElementsByClassName("tdScroller")[t].setAttribute("style", style);
+				}
+			}
+		}
+		
+		function showOptions(element) {
+			var now = new Date();
+			var cssClass = element.className;
+			var show = "";
+			var hide = "";
+			var temp = 0;
+			switch (cssClass) {
+				case "dateInput":
+					show = instData.dateObject.dateDiv;
+					if(typeof instData.timeObject !== "undefined") {
+						hide = instData.timeObject.timeDiv;
+					}
+					instData.dateObject.containerDay.scrollTop = 20 * (now.getDate() - 1);
+					instData.dateObject.containerMonth.scrollTop = 20 * now.getMonth();
+					instData.dateObject.containerYear.scrollTop = 20 * (now.getFullYear() - parseInt(instData.dateObject.containerYear.children[0].innerHTML, 10));
+					instData.outputDate.Day = addZero(now.getDate());
+					instData.outputDate.Month = instData.dateObject.containerMonth.children[now.getMonth()].innerHTML;
+					instData.outputDate.Year = now.getFullYear();
+					isValidDate(instData.outputDate.Month, instData.outputDate.Year, false);
+					break;
+				case "timeInput":
+					if(typeof instData.timeObject !== "undefined") {
+						show = instData.timeObject.timeDiv;
+					}
+					hide = instData.dateObject.dateDiv;
+					instData.timeObject.containerHour.scrollTop = 20 * now.getHours();
+					instData.timeObject.containerMinutes.scrollTop = 20 * now.getMinutes();
+					instData.outputTime.Hour = now.getHours();
+					instData.outputTime.Minutes = now.getMinutes();
+					instData.outputTime.AmPm = "AM";
+					if(instData.timeObject.timeFormat === 12) {
+						if (now.getHours() > 12) {
+							temp = now.getHours() - 12;
+							instData.timeObject.containerHour.scrollTop = 20 * temp;
+							instData.timeObject.containerAmPm.scrollTop = 20;
+							instData.outputTime.Hour = now.getHours() - 12;
+							instData.outputTime.AmPm = "PM";
+						} else {
+							instData.timeObject.containerAmPm.scrollTop = 0;
+						}
+						
+					}
+					break;
+				default:
+					console.error("ERROR: Check showOptions()!");
+					break;
+			}
+			if(typeof hide !== "string") {
+				hide.style.opacity = 0;
+				hide.style.zIndex = 0;
+			}
+			show.style.opacity = 1;
+			show.style.zIndex = 5;
+			delete now;
+		}
+		
+		function hideOptions(element) {
+			var divToHide = element.parentNode.parentNode;
+			divToHide.style.opacity = 0;
+			divToHide.style.zIndex = 0;
+		}
+		
+		function setFunction(element) {
+			hideOptions(element);
+			var elID = element.id;
+			var input = "";
+			var day = "";
+			var month = "";
+			var hour = "";
+			var minutes = "";
+			switch (elID) {
+				case "date":
+					input = instData.dateObject.dateInput;
+					day = addZero(instData.outputDate.Day);
+					if(instData.outputDate.Month.match(/[0-9]/)) {
+						month = addZero(instData.outputDate.Month);
+						input.innerHTML = day + " / " + month + " / " + instData.outputDate.Year;
+					} else {
+						month = instData.outputDate.Month;
+						input.innerHTML = day + " " + month + " " + instData.outputDate.Year;
+					}
+					break;
+				case "time":
+					input = instData.timeObject.timeInput;
+					if(instData.timeObject.timeFormat === 12) {
+						hour = addZero(instData.outputTime.Hour);
+						minutes = addZero(instData.outputTime.Minutes);
+						input.innerHTML = hour + " : " + minutes + " " + instData.outputTime.AmPm;
+					} else {
+						hour = addZero(instData.outputTime.Hour);
+						minutes = addZero(instData.outputTime.Minutes);
+						input.innerHTML = hour + " : " + minutes;
+					}
+					break;
+				default:
+					console.error("ERROR: Check setFunction()!");
+					break;
+			}
+		}
+		
+		function centerButClick(element) {
+			hideOptions(element);
+			var now = new Date();
+			var elValue = element.value;
+			var input = "";
+			var temp = 0;
+			var day = "";
+			var month = "";
+			var hour = "";
+			var minutes = "";
+			switch (elValue) {
+				case "Today":
+					input = instData.dateObject.dateInput;
+					day = addZero(now.getDate());
+					month = instData.dateObject.containerMonth.children[now.getMonth()].innerHTML;
+					if(instData.outputDate.Month.match(/[0-9]/)) {
+						input.innerHTML = day + " / " + month + " / " + instData.outputDate.Year;
+					} else {
+						input.innerHTML = day + " " + month + " " + instData.outputDate.Year;
+					}
+					instData.outputDate.Day = now.getDate();
+					instData.outputDate.Month = now.getMonth() + 1;
+					instData.outputDate.Year = now.getFullYear();
+					break;
+				case "Now":
+					input = instData.timeObject.timeInput;
+					instData.outputTime.Minutes = now.getMinutes();
+					instData.outputTime.Hour = now.getHours();
+					if(instData.timeObject.timeFormat === 12) {
+						instData.outputTime.AmPm = "AM";
+						if(now.getHours() > 12) {
+							temp = now.getHours() - 12;
+							instData.outputTime.Hour = temp;
+							instData.outputTime.AmPm = "PM";
+						}
+						hour = addZero(instData.outputTime.Hour);
+						minutes = addZero(instData.outputTime.Minutes);
+						input.innerHTML = hour + " : " + minutes + " " + instData.outputTime.AmPm;
+					} else {
+						hour = addZero(instData.outputTime.Hour);
+						minutes = addZero(instData.outputTime.Minutes);
+						input.innerHTML = hour + " : " + minutes;
+					}
+					break;
+				default:
+					console.error("ERROR: Check centerButClick()!");
+					break;
+			}
+			delete now;
+		}
+		
+		function mouseWheelEvent(event, element, output) {
+			event.preventDefault();
+			var container = element.children[1];
+			var subObj = container.id.slice(container.id.indexOf("container") + 9);
+			var delta = 0;
+			var pixels = container.scrollTop;
+			var max = container.scrollHeight - 60;
+			var min = 0;
+			var newValue = 0;
+			var index = 0;
+			if (event.wheelDelta) {
+				delta = event.wheelDelta;
+			} else if (event.deltaY) {
+				delta = event.deltaY * (-40);
+			} else {
+				delta = event.touches[0].pageY - 250;
+			}
+			if (delta < 0) {
+				newValue = pixels + 20;
+			} else {
+				newValue = pixels - 20;
+			}
+			if(newValue > max) {
+				if(navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/)) {
+					return false;
+				} else {
+					newValue = min;
+				}
+			}
+			if(newValue < min) {
+				if(navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/)) {
+					return false;
+				} else {
+					newValue = max;
+				}
+			}
+			container.scrollTop = newValue;
+			if(newValue < 0) {
+				newValue = newValue * -1;
+			}
+			index = newValue / 20;
+			output[subObj] = container.children[index].innerHTML;
+			if(output.Month && subObj !== "Day") {
+				isValidDate(output.Month, output.Year, true);
+			}
+		}
+		
+		function moveUpDown(element, tdObject, output) {
+			var input = element.id.split("_");
+			var container = tdObject["container" + input[0]];
+			var direction = parseInt((input[1] + "1"), 10);
+			var pixels = container.scrollTop;
+			var max = container.scrollHeight - 60;
+			var min = 0;
+			var newValue = pixels + (direction * 20);
+			var index = 0;
+			if(newValue > max) {
+				newValue = min;
+			}
+			if(newValue < min) {
+				newValue = max;
+			}
+			container.scrollTop = newValue;
+			if(newValue < 0) {
+				newValue = newValue * -1;
+			}
+			index = newValue / 20;
+			output[input[0]] = container.children[index].innerHTML;
+			if(input[0] !== "Day") {
+				isValidDate(output.Month, output.Year, true);
+			}
+		}
+	</script>
+</head>
+<body onload = "createInpputField()"> 
+</body>
+</html>

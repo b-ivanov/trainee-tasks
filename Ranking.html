@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>Ranking CORE</title>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+			display: inline-block;
+		}
+		.placeforRanking {
+			width: 100%;
+			display: inline-block;
+			position: relative;
+			background-color: #E1E1E1;
+		}
+		.placeforRanking:after {
+			padding-top: 50%;
+			display: block;
+			content: '';
+		}
+		.rankingParentContainer {
+			width: 100%;
+			height: 100%;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			position: absolute;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+		.dropZonesContainer {
+			width: 100%;
+			height: 55%;
+			text-align: center;
+		}
+		.dropZoneColumn {
+			height: 100%;
+			display: inline-block;
+			text-align: center;
+			/*background-color: rgba(255, 0, 0, 0.3);*/
+		}
+		.cylinderContainer {
+			position: relative;
+			top: 15%;
+			left: 15%;
+			height: 60%;
+			width: 70%;
+			border-radius: 5px;
+			border: 2px dashed rgba(0, 0, 0, 0);
+			box-sizing: border-box;
+			padding-top: 15%;
+		}
+		.cylinderContainer img {
+			position: absolute;
+			bottom: 20%;
+			left: 20%;
+			width: 60%;
+		}
+		.cylinderLabel {
+			text-align: center;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-size: 100%;
+			font-weight: bold;
+			color: #5A6873;
+		}
+		.imagesContainer {
+			width: 100%;
+			height: 35%;
+			/*background-color: rgba(0, 255, 0, 0.3);*/
+		}
+		.answersContainer {
+			width: 100%;
+			height: 10%;
+			text-align: center;
+		}
+		.answersContainer .answer {
+			height: 100%;
+			text-align: center;
+			display: inline-block;
+			font-family: Arial Black, Gadget, sans-serif;
+			font-size: 100%;
+			font-weight: bold;
+			word-wrap: break-word;
+			vertical-align: top;
+			color: #5A6873;
+			/*background-color: rgba(0, 0, 255, 0.3);*/
+		}
+		.draggableImages {
+			position: absolute;
+			z-index: 20;
+			-webkit-transition: transform 300ms ease-in-out, left 300ms ease-in-out, top 300ms ease-in-out;
+			-moz-transition: transform 300ms ease-in-out, left 300ms ease-in-out, top 300ms ease-in-out;
+			-ms-transition: transform 300ms ease-in-out, left 300ms ease-in-out, top 300ms ease-in-out;
+			-o-transition: transform 300ms ease-in-out, left 300ms ease-in-out, top 300ms ease-in-out;
+			transition: transform 300ms ease-in-out, left 300ms ease-in-out, top 300ms ease-in-out;
+		}
+	</style>
+</head>
+<body onload="callLoops()" style="width: 50%;">
+	<div class="placeforRanking" id="placeforRanking1"></div>
+	<!-- <div class="placeforRanking" id="placeforRanking2"></div>
+	<div class="placeforRanking" id="placeforRanking3"></div>
+	<div class="placeforRanking" id="placeforRanking4"></div> -->
+</body>
+<script type="text/javascript">
+	/** TO DOs
+		-correct resizing
+		-IE9 pseudo animation on move
+		-add in OSM
+		-ability to change images, cylinders, answer texts and rank texts
+	*/
+
+	function callLoops () {
+		rankingFunctions.renderRanking.call(loops['id4A']);
+		// rankingFunctions.renderRanking.call(loops['idvB']);
+		// rankingFunctions.renderRanking.call(loops['id2J']);
+		// rankingFunctions.renderRanking.call(loops['idgh']);
+	}
+
+	var loops = {
+		"id4A" : {
+			"uniqueID" : "id4A",
+			"objectName" : "_L1",
+			"parent" : document.getElementById("placeforRanking1"),
+			"images" : ["images/facebook.png", "images/googlePlus.png", "images/linkedin.png", "images/viber.png", "images/whatsapp.png"],
+			"answers" : ["Facebook", "Google+", "LinkedIn", "Viber", "WhatsApp"]
+		},
+		"idvB" : {
+			"uniqueID" : "idvB",
+			"objectName" : "_L2",
+			"parent" : document.getElementById("placeforRanking2"),
+			"images" : ["images/smiley1.png", "images/smiley2.png", "images/smiley3.png", "images/smiley4.png", "images/smiley5.png"],
+			"answers" : ["Smiley 1", "Smiley 2", "Smiley 3", "Smiley 4", "Smiley 5"]
+		},
+		"id2J" : {
+			"uniqueID" : "id2J",
+			"objectName" : "_L3",
+			"parent" : document.getElementById("placeforRanking3"),
+			"images" : ["images/smiley1.png", "images/l3.png", "images/smiley2.png", "images/l4.png", "images/smiley3.png", "images/l5.png"],
+			"answers" : ["Smiley 1", "Badge 2", "Smiley 3", "Badge 4", "Smiley 5", "Badge 6"]
+		},
+		"idgh" : {
+			"uniqueID" : "idgh",
+			"objectName" : "_L4",
+			"parent" : document.getElementById("placeforRanking4"),
+			"images" : ["images/smiley1.png", "images/smiley2.png", "images/smiley3.png", "images/smiley4.png", "images/smiley5.png", "images/l1.png", "images/l2.png", "images/l3.png", "images/l4.png", "images/l5.png"],
+			"answers" : ["Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5", "Answer 6", "Answer 7", "Answer 8", "Answer 9", "Answer 10"]
+		}
+	};
+
+	var rankingFunctions = {
+		"scaleOnRank" : 0.7,
+		"scaleOnMovement" : 0.9,
+		"mobileRendering" : false,
+		"events" : {
+			"down" : "onmousedown",
+			"up" : "onmouseup",
+			"move" : "onmousemove",
+			"out" : "onmouseout"
+			// "down" : "ontouchstart",
+			// "up" : "ontouchend",
+			// "move" : "ontouchmove",
+			// "out" : "ontouchleave"
+		},
+
+		"renderRanking" : function () {
+			var parent = this.parent;
+			var images = this.images;
+			var answers = this.answers;
+			var answersCount = answers.length;
+			this.rankingProperties = {
+				"columnWidth" : 100 / answersCount,
+				"draggingImage" : null,
+				"currentDropZone" : null,
+				"answerMap" : rankingFunctions.createNullArray(answersCount)
+			}
+			
+			var rankingHTML = [];
+			var loopID = this.uniqueID;
+			var functionArguments = "event, '" + loopID+ "'";
+
+			rankingHTML.push('<div ' + rankingFunctions.events.move + '="rankingFunctions.onMoveEventHandler(' + functionArguments + ')" ' + rankingFunctions.events.up + '="rankingFunctions.onEndEventHandler(' + functionArguments + ')" id="rankingParentContainer_' + loopID + '" class="rankingParentContainer">');
+			rankingHTML.push(rankingFunctions.renderDropZonesContainer.call(this, answersCount));
+			rankingHTML.push(rankingFunctions.renderImagesContainer.call(this, images));
+			rankingHTML.push(rankingFunctions.renderAnswersContainer.call(this, answers));
+			rankingHTML.push('</div>');
+			
+			parent.innerHTML = rankingHTML.join("");
+		},
+
+		"renderDropZonesContainer" : function (cylindersCount) {
+			var dropZonesHTML = [];
+			var cylinderWidth = (this.rankingProperties.columnWidth * 0.75).toFixed(2);
+			var distance = (this.rankingProperties.columnWidth - cylinderWidth);
+			var name = "";
+
+			dropZonesHTML.push('<div class="dropZonesContainer">');
+			for (var i = 0; i < cylindersCount; i++) {
+				name = "dropZone_" + this.uniqueID + "_" + i
+				dropZonesHTML.push('<div id="' + name + '" name="' + name + '" class="dropZoneColumn" style="width:' + cylinderWidth + '%;">');
+					dropZonesHTML.push('<div name="' + name + '" class="cylinderContainer">');
+						dropZonesHTML.push('<div name="' + name + '" class="cylinderLabel">' + (i + 1) + '</div>');
+						dropZonesHTML.push('<img name="' + name + '" src="images/rank.png"/>');
+					dropZonesHTML.push('</div>');
+				dropZonesHTML.push('</div>');
+				if (i < cylindersCount - 1) {
+					dropZonesHTML.push('<div style="display: inline-block; width:' + distance + '%;"></div>');
+				}
+			}
+			dropZonesHTML.push('</div>');
+			return dropZonesHTML.join("");
+		},
+
+		"renderImagesContainer" : function (images) {
+			var imagesCount = images.length;
+			var imagesHTML = [];
+			var imageWidth = this.rankingProperties.columnWidth / 2;
+			var marginLeft = imageWidth / 2;
+
+			imagesHTML.push('<div class="imagesContainer">');
+			for (var i = 0; i < imagesCount; i++) {
+				imagesHTML.push('<img ' + rankingFunctions.events.down + '="rankingFunctions.onStartEventHandler(event)" class="draggableImages" id="draggableImage_' + this.uniqueID + '_' + i + '" style="width: ' + imageWidth + '%; top: 55%; left:' + ((i * this.rankingProperties.columnWidth) + marginLeft).toFixed(2) + '%;" src="' + images[i] + '"/>');
+			}
+			imagesHTML.push('</div>');
+			return imagesHTML.join("");
+		},
+
+		"renderAnswersContainer" : function (answers) {
+			var answersCount = answers.length;
+			var answersHTML = [];
+			var distance = 2;
+			var width = this.rankingProperties.columnWidth - 2;
+			answersHTML.push('<div class="answersContainer">');
+			for (var i = 0; i < answersCount; i++) {
+				answersHTML.push('<div class="answer" style="width:' + width + '%;">' + answers[i] + '</div>');
+				if (i < answersCount - 1) {
+					answersHTML.push('<div style="display: inline-block; width:' + distance + '%;"></div>');
+				}
+			}
+			answersHTML.push('</div>');
+			return answersHTML.join("");
+		},
+
+		"setPropertyForAllEngines" : function (element, property, val) {
+			element.style[property] = val;
+			property = property[0].toUpperCase() + property.slice(1);
+			var prefixes = ["webkit", "moz", "ms", "o"];
+			for (var p = 0; p < prefixes.length; p++) {
+				element.style[prefixes[p] + property] = val;
+			}
+		},
+
+		"onStartEventHandler" : function (event) {
+			event.preventDefault();
+			// console.log("onStartEventHandler", event);
+			var evt = event;
+			var addPixelsToTouch = 2;
+			if (rankingFunctions.mobileRendering) {
+				evt = event.touches[0];
+				addPixelsToTouch = evt.radiusX * 0.7;
+			}
+			var loopID = evt.target.id.split("_")[1];
+			var loop = loops[loopID];
+			loop.rankingProperties.draggingImage = evt.target;
+			var rankingContainer = document.getElementById("rankingParentContainer_" + loopID).getBoundingClientRect();
+			var dragImage = loop.rankingProperties.draggingImage;
+			var scale = rankingFunctions.scaleOnMovement;
+			var boundingClient = dragImage.getBoundingClientRect();
+			var height = dragImage.offsetHeight;
+			var width = dragImage.offsetWidth;
+			var scaleCompensation = {
+				"top" : 0,
+				"left" : 0
+			};
+			if (dragImage.getAttribute("style").match("scale")) {
+				var tempScale = 1 - rankingFunctions.scaleOnRank;
+				scaleCompensation.top = (height * tempScale) / 2;
+				scaleCompensation.left = (width * tempScale) / 2;
+			}
+			var shift = ((height - height * scale) / 2) - addPixelsToTouch;
+			var safetyBounds = 10;
+			rankingFunctions.setPropertyForAllEngines(dragImage, "transform", "scale(" + scale + ")");
+			rankingFunctions.setPropertyForAllEngines(dragImage, "transition", "none");
+			var props = {
+				"x" : (((boundingClient.left - scaleCompensation.left) - dragImage.offsetLeft) + (width / 2)),
+				"y" : (((boundingClient.top - scaleCompensation.top) - dragImage.offsetTop) + height) - shift,
+				"top" : rankingContainer.top + safetyBounds,
+				"right" : rankingContainer.right - safetyBounds,
+				"bottom" : rankingContainer.bottom - safetyBounds,
+				"left" : rankingContainer.left + safetyBounds
+			};
+			dragImage.style.left = (evt.clientX - props.x).toFixed(2) + "px";
+			dragImage.style.top = (evt.clientY - props.y).toFixed(2) + "px";
+			dragImage.style.zIndex = 25;
+			loop.rankingProperties.startingPoint = props;
+		},
+
+		"onMoveEventHandler" : function (event, loopID) {
+			var loop = loops[loopID];
+			if (loop.rankingProperties.draggingImage) {
+				// console.log("onMoveEventHandler", event);
+				event.preventDefault();
+				var props = loop.rankingProperties;
+				var dragImage = props.draggingImage;
+				var evt = event;
+				if (rankingFunctions.mobileRendering) {
+					evt = event.touches[0];
+				}
+				var newPositionX = evt.clientX;
+				var newPositionY = evt.clientY;
+				var name = document.elementFromPoint(newPositionX, newPositionY).getAttribute("name");
+				if (name) {
+					rankingFunctions.showDashedLine(document.getElementById(name), loopID);
+				} else {
+					rankingFunctions.hideDashedLine(loop.rankingProperties.currentDropZone, loopID);
+				}
+				
+				if ((props.startingPoint.left < newPositionX && newPositionX < props.startingPoint.right) && (props.startingPoint.top < newPositionY && newPositionY < props.startingPoint.bottom)) {
+					dragImage.style.left = (newPositionX - props.startingPoint.x).toFixed(2) + "px";
+					dragImage.style.top = (newPositionY - props.startingPoint.y).toFixed(2) + "px";
+				} else {
+					rankingFunctions.hideDashedLine(loop.rankingProperties.currentDropZone, loopID);
+					rankingFunctions.resetAnswer(loop, dragImage);
+					loop.rankingProperties.draggingImage = null;
+				}
+			}
+		},
+
+		"onEndEventHandler" : function (event, loopID) {
+			// console.log("onEndEventHandler", event.target.id);
+			var loop = loops[loopID];
+			if (loop.rankingProperties.draggingImage) {
+				var dragImage = loop.rankingProperties.draggingImage;
+				var dropZone = loop.rankingProperties.currentDropZone;
+				var answerIndex = parseInt(dragImage.id.split("_")[2], 10) + 1;
+				rankingFunctions.setPropertyForAllEngines(dragImage, "transition", "");
+				rankingFunctions.setPropertyForAllEngines(dragImage, "transform", "");
+
+				if (dropZone) {
+					var iteration = parseInt(dropZone.id.split("_")[2], 10);
+					var setAnswer = loop.rankingProperties.answerMap[iteration];
+					if (setAnswer) {
+						rankingFunctions.resetAnswer(loop, document.getElementById("draggableImage_" + loopID + "_" + (setAnswer - 1)));
+					}
+					rankingFunctions.rankAnswer(loop, iteration, dragImage);
+					rankingFunctions.hideDashedLine(dropZone, loopID);
+					var tempIndex = loop.rankingProperties.answerMap.indexOf(answerIndex);
+					if (tempIndex > -1) {
+						loop.rankingProperties.answerMap[tempIndex] = null;
+					}
+					loop.rankingProperties.answerMap[iteration] = answerIndex;
+				} else {
+					rankingFunctions.resetAnswer(loop, dragImage);
+					if (loop.rankingProperties.lastDropZoneIndex) {
+						loop.rankingProperties.answerMap[loop.rankingProperties.lastDropZoneIndex] = null;
+					}
+				}
+				loop.rankingProperties.draggingImage = null;
+				// console.log("answerMap =", loop.rankingProperties.answerMap);
+			}
+		},
+
+		"showDashedLine" : function (dropZoneColumn, loopID) {
+			var loop = loops[loopID];
+			if (loop.rankingProperties.draggingImage && dropZoneColumn) {
+				dropZoneColumn.childNodes[0].style.borderColor = "#111";
+				loop.rankingProperties.currentDropZone = dropZoneColumn;
+			}
+		},
+
+		"hideDashedLine" : function (dropZoneColumn, loopID) {
+			var loop = loops[loopID];
+			if (loop.rankingProperties.draggingImage && dropZoneColumn) {
+				loop.rankingProperties.lastDropZoneIndex = parseInt(dropZoneColumn.id.split("_")[2], 10);
+				dropZoneColumn.childNodes[0].style.borderColor = "";
+				loop.rankingProperties.currentDropZone = null;
+			}
+		},
+
+		"rankAnswer" : function (loop, rankNumber, draggableImage) {
+			var scale = rankingFunctions.scaleOnRank;
+			var width = loop.rankingProperties.columnWidth
+			var marginLeft = width / 4;
+
+			draggableImage.setAttribute("name", "dropZone_" + loop.uniqueID + "_" + rankNumber);
+			draggableImage.style.top = "18%";
+			draggableImage.style.left = ((rankNumber * width) + marginLeft).toFixed(2) + "%";
+			rankingFunctions.setPropertyForAllEngines(draggableImage, "transform", "scale(" + scale + ")");
+			draggableImage.style.zIndex = 22;
+		},
+
+		"resetAnswer" : function (loop, draggableImage) {
+			var width = loop.rankingProperties.columnWidth;
+			var imageWidth = loop.rankingProperties.columnWidth / 2;
+			var marginLeft = width / 4;
+			var index = draggableImage.id.split("_")[2];
+			
+			draggableImage.removeAttribute("name");
+			draggableImage.setAttribute("style", "");
+			draggableImage.style.left = ((index * width) + marginLeft).toFixed(2) + "%";
+			draggableImage.style.top = "55%";
+			draggableImage.style.width = imageWidth + "%";
+		},
+
+		"resetRanking" : function (loop) {
+			var answersCount = loop.answers.length;
+			for (var a = 0; a < answersCount; a++) {
+				loop.rankingProperties.answerMap[a] = null;
+				rankingFunctions.resetAnswer(loop, document.getElementById("draggableImage_" + loop.uniqueID + "_" + a));
+			}
+		},
+
+		"createNullArray" : function (len) {
+			var newArray = [];
+			for (var i = 0; i < len; i++) {
+				newArray.push(null);
+			}
+			return newArray;
+		}
+	};
+</script>
+</html>

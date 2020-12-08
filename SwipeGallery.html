@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Swipe gallery demo</title>
+<style>
+	.swipeContainer {
+		margin: auto;
+		text-align: center;
+		overflow: hidden;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+	}
+	.cardsContainer {
+		position: relative;
+		height: 100%;
+		right: 0%;
+		-webkit-transition: right 300ms ease-in-out;
+		-moz-transition: right 300ms ease-in-out;
+		-ms-transition: right 300ms ease-in-out;
+		-o-transition: right 300ms ease-in-out;
+		transition: right 300ms ease-in-out;
+  }
+	.card {
+		height: 100%;
+		vertical-align: top;
+		display: inline-block;
+	}
+	.navDots {
+		margin: auto;
+		text-align: center;
+	}
+	.spanDot  {
+		width: 10px;
+		height: 10px;
+		margin: 5px;
+		border-radius: 10px;
+		border: 1px solid #CCC;
+		box-shadow: 1px 1px 3px #000;
+		display: inline-block;
+		-webkit-transition: width 300ms ease-in-out;
+		-moz-transition: width 300ms ease-in-out;
+		-ms-transition: width 300ms ease-in-out;
+		-o-transition: width 300ms ease-in-out;
+		transition: width 300ms ease-in-out;
+	}
+</style>
+</head>
+<body onload='start()'>
+</body>
+<script type="text/javascript">
+	function start () {
+		document.body.innerHTML = swipeGallery.init(["/lib/osm/css/a1.png", "/lib/osm/css/a2.png", "/lib/osm/css/a3.png", "/lib/osm/css/a4.png", "/lib/osm/css/a5.png", "/lib/osm/css/a6.png", "/lib/osm/css/a7.png", "/lib/osm/css/a8.png", "/lib/osm/css/a9.png", "/lib/osm/css/a10.png", "/lib/osm/css/a11.png", "/lib/osm/css/a12.png", "/lib/osm/css/a13.png", "/lib/osm/css/x.png", "/lib/osm/css/b1.png", "/lib/osm/css/b2.png", "/lib/osm/css/b3.png", "/lib/osm/css/b4.png", "/lib/osm/css/b5.png", "/lib/osm/css/b6.png", "/lib/osm/css/b7.png"], 3, 300);
+	}
+
+	var swipeGallery = {
+		"imagesCount" : 0,
+		"cardsCount" : 0,
+		"currentCard" : 0,
+		"currentXPosition" : 0,
+
+		"init" : function (images, elemsOnSide, size) {
+			if (images) {
+				if (!elemsOnSide || elemsOnSide <= 0) {
+					elemsOnSide = 3;
+				}
+				if (!size || size <= 100) {
+					size = 300;
+				}
+				var imgCount = images.length;
+				var elemsOnCard = Math.pow(elemsOnSide, 2);
+				var pagesCount = Math.ceil(imgCount / elemsOnCard);
+				swipeGallery.imagesCount = imgCount;
+				swipeGallery.cardsCount = pagesCount;
+				var html = [];
+				var dotsHTML = [];
+				var imageMargin = 2.5;
+				var imageSize = ((size / elemsOnSide) - (imageMargin * 2)).toFixed(2);
+
+				var downEvent = "onmousedown";
+				var moveEvent = "onmousemove";
+				var upEvent = "onmouseup";
+				// var downEvent = "ontouchstart";
+				// var moveEvent = "ontouchmove";
+				// var upEvent = "ontouchend";
+
+				html.push('<div class="swipeContainer" style="width: ' + size + 'px; height: ' + size + 'px;" ' + downEvent + '="swipeGallery.onMouseDownEvent(event)" ' + moveEvent + '="swipeGallery.onMouseMoveEvent(event)" ' + upEvent + '="swipeGallery.onMouseupEvent(event)">');
+				html.push('<div style="width: ' + (100 * pagesCount) + '%;" class="cardsContainer">');
+				html.push('<div style="width: ' + (100 / pagesCount).toFixed(4) + '%;" class="card">');
+				dotsHTML.push('<span onclick="swipeGallery.swipeToSpecificCard(0);" class="spanDot" style="width: 30px;"></span>');
+				for (var i = 0; i < imgCount; i++) {
+					if (i !== 0 && (i % elemsOnCard) === 0) {
+						html.push('</div><div style="width: ' + (100 / pagesCount).toFixed(4) + '%;" class="card">');
+						dotsHTML.push('<span onclick="swipeGallery.swipeToSpecificCard(' + (i / elemsOnCard) + ');" class="spanDot"></span>');
+					}
+					if (((i + 1) % elemsOnSide) === 0) {
+						html.push('<img style="width: ' + imageSize + 'px; height: ' + imageSize + 'px; margin: ' + imageMargin + 'px; margin-right: 0px; float: left;" src="' + images[i] + '"/>');
+					} else {
+						html.push('<img style="width: ' + imageSize + 'px; height: ' + imageSize + 'px; margin: ' + imageMargin + 'px; float: left;" src="' + images[i] + '"/>');
+					}
+				}
+				html.push('</div></div></div>');
+				html.push('<div style="width: ' + size + 'px;" class="navDots">' + dotsHTML.join('') + '</div>');
+				return html.join('');
+			} else {
+				console.error("Error in swipeGallery: no images are given!");
+			}
+		},
+
+		"onMouseDownEvent" : function (event) {
+			event.preventDefault();
+			swipeGallery.currentXPosition = event.clientX;
+			// swipeGallery.currentXPosition = event.touches[0].clientX;
+		},
+
+		"onMouseMoveEvent" : function (event) {
+			event.preventDefault();
+			if (swipeGallery.currentXPosition !== 0 && Math.abs(swipeGallery.currentXPosition - event.clientX) >= 10) {
+				if (swipeGallery.currentXPosition < event.clientX) {
+			// if (swipeGallery.currentXPosition !== 0 && Math.abs(swipeGallery.currentXPosition - event.touches[0].clientX) >= 10) {
+				// if (swipeGallery.currentXPosition < event.touches[0].clientX) {
+					swipeGallery.swipeRight();
+				} else {
+					swipeGallery.swipeLeft();
+				}
+				swipeGallery.currentXPosition = 0;
+			}
+		},
+
+		"onMouseupEvent" : function (event) {
+			swipeGallery.currentXPosition = 0;
+		},
+
+		"swipeToSpecificCard" : function (index) {
+			if (swipeGallery.currentCard !== index) {
+				swipeGallery.currentCard = index;
+				swipeGallery.updateUI();
+			}
+		},
+
+		"swipeLeft" : function () {
+			if (swipeGallery.currentCard < swipeGallery.cardsCount - 1) {
+				swipeGallery.currentCard++;
+				swipeGallery.updateUI();
+			}
+		},
+
+		"swipeRight" : function () {
+			if (swipeGallery.currentCard > 0) {
+				swipeGallery.currentCard--;
+				swipeGallery.updateUI();
+			}
+		}, 
+
+		"updateUI" : function () {
+			document.getElementsByClassName("cardsContainer")[0].style.right = (swipeGallery.currentCard * 100) + "%";
+			var dots = document.getElementsByClassName("spanDot");
+			var dotsCount = dots.length;
+			for (var d = 0; d < dotsCount; d++) {
+				if (d === swipeGallery.currentCard) {
+					dots[d].style.width = "30px";
+				} else {
+					dots[d].style.width = "";
+				}
+			}
+		}
+	};
+</script>
+</html>

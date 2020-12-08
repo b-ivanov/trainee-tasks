@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+<title>Translate</title>
+<style>
+	textarea {
+		height: calc(100% - 10px);
+		width: calc(50% - 10px);
+		resize: none;
+	}
+</style>
+<script>
+	function translate (message) {
+		var alphabet = {
+			"`" : "ч",
+			"q" : "я",
+			"w" : "в",
+			"e" : "е",
+			"r" : "р",
+			"t" : "т",
+			"y" : "ъ",
+			"u" : "у",
+			"i" : "и",
+			"o" : "о",
+			"p" : "п",
+			"[" : "ш",
+			"]" : "щ",
+			"a" : "а",
+			"s" : "с",
+			"d" : "д",
+			"f" : "ф",
+			"g" : "г",
+			"h" : "х",
+			"j" : "й",
+			"k" : "к",
+			"l" : "л",
+			"\\" : "ю",
+			"z" : "з",
+			"x" : "ь",
+			"c" : "ц",
+			"v" : "ж",
+			"b" : "б",
+			"n" : "н",
+			"m" : "м",
+			"Q" : "Я",
+			"W" : "В",
+			"E" : "Е",
+			"R" : "Р",
+			"T" : "Т",
+			"Y" : "Ъ",
+			"U" : "У",
+			"I" : "И",
+			"O" : "О",
+			"P" : "П",
+			"A" : "А",
+			"S" : "С",
+			"D" : "Д",
+			"F" : "Ф",
+			"G" : "Г",
+			"H" : "Х",
+			"J" : "Й",
+			"K" : "К",
+			"L" : "Л",
+			"Z" : "З",
+			"X" : "Ь",
+			"C" : "Ц",
+			"V" : "Ж",
+			"B" : "Б",
+			"N" : "Н",
+			"M" : "М"
+		};
+		var mesLen = message.length;
+		var outMessage = [];
+		for (var i = 0; i < mesLen; i++) {
+			if (message[i] in alphabet) {
+				outMessage.push(alphabet[message[i]]);
+			} else {
+				outMessage.push(message[i]);
+			}
+		}
+		return outMessage.join('');
+	}
+	
+	function makeTranslation() {
+		var textareas = document.querySelectorAll("textarea");
+		var mess = textareas[0].value;
+		textareas[1].value = translate(mess);
+	}
+</script>
+</head>
+<body>
+	<textarea placeholder="Paste text here!" onchange="makeTranslation()"></textarea>
+	<textarea placeholder="Translated text will show here" onclick="this.select();"></textarea>
+</body>
+</html>
